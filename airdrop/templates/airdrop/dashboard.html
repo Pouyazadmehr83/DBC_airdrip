@@ -1,0 +1,66 @@
+{% extends 'airdrop/base.html' %}
+
+{% block content %}
+<!-- آمار کاربر -->
+<div class="card">
+    <h2>Your Stats</h2>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div>
+            <h3>Total Points</h3>
+            <div style="font-size: 2em; color: var(--accent2);">{{ total_points }} $DBC</div>
+        </div>
+        <div>
+            <h3>Completed Tasks</h3>
+            <div style="font-size: 2em; color: var(--accent2);">{{ completed_count }}/{{ total_tasks }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- لیست تسک‌ها -->
+<div class="card">
+    <h2>Available Tasks</h2>
+    
+    {% for item in tasks_with_status %}
+    <div class="task-item {% if item.completed %}completed{% endif %}">
+        <h3>{{ item.task.name }}</h3>
+        <p>Reward: <strong>{{ item.task.points_reward }} $DBC</strong></p>
+        <p style="color: var(--muted); font-size: 0.9em;">
+            Type: {{ item.task.get_task_type_display }}
+        </p>
+        
+        {% if item.completed %}
+            {% if item.completion.verified %}
+                <div class="message-success">
+                    ✅ Verified - {{ item.task.points_reward }} $DBC awarded!
+                </div>
+            {% elif item.completion.points_awarded %}
+                <div class="message-success">
+                    ✅ Points already awarded!
+                </div>
+            {% else %}
+                <div class="message-warning">
+                    ⏳ Waiting for admin verification
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="margin-top: 15px;">
+                <a href="{{ item.task.verification_url }}" target="_blank" class="btn">
+                    🔗 Go to Task
+                </a>
+                <form method="post" action="{% url 'airdrop:complete_task' item.task.id %}" style="display: inline; margin-left: 10px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn" style="background: #555;">
+                        ✅ Mark as Completed
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    {% empty %}
+    <div style="text-align: center; color: var(--muted);">
+        <p>No active tasks available at the moment.</p>
+        <p>Check back later for new tasks!</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

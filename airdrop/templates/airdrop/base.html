@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DonkeyBlast Airdrop{% endblock %}</title>
+    <style>
+        :root {
+            --bg1: #06021a;
+            --bg2: #1b0b3a;
+            --accent: #7b5cff;
+            --accent2: #c08bff;
+            --muted: #cfc7ff;
+        }
+        
+        body {
+            background: linear-gradient(180deg, var(--bg1), var(--bg2));
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+        }
+        
+        .task-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .completed {
+            border-left-color: #00ff00;
+            opacity: 0.7;
+        }
+        
+        .message-success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .message-error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .message-warning {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffff00;
+            color: #ffff00;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- هدر -->
+        <div class="card">
+            <h1>🎁 DonkeyBlast Airdrop Program</h1>
+            <p style="color: var(--muted);">Complete tasks to earn $DBC tokens!</p>
+            <div>
+                <a href="{% url 'airdrop:airdrop_dashboard' %}" class="btn">Dashboard</a>
+                <a href="{% url 'airdrop:user_profile' %}" class="btn btn-outline">Profile</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'admin:logout' %}" class="btn btn-outline">Logout</a>
+                {% else %}
+                    <a href="{% url 'admin:login' %}" class="btn btn-outline">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- نمایش پیام‌ها -->
+        {% if messages %}
+        <div class="card">
+            {% for message in messages %}
+                <div class="message-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- محتوای اصلی -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

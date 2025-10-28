@@ -1,0 +1,75 @@
+{% extends 'airdrop/base.html' %}
+
+{% block title %}Register - DonkeyBlast Airdrop{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Join DonkeyBlast Airdrop</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if referral_code %}
+        <div class="message-success" style="margin-bottom: 20px;">
+            🎉 You were invited by a friend! 
+            <input type="hidden" name="referral_code" value="{{ referral_code }}">
+        </div>
+        {% endif %}
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: var(--muted);">
+                Username
+            </label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div style="color: #ff4444; font-size: 0.9em;">
+                {{ form.username.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: var(--muted);">
+                Password
+            </label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <div style="color: #ff4444; font-size: 0.9em;">
+                {{ form.password1.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; color: var(--muted);">
+                Confirm Password
+            </label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <div style="color: #ff4444; font-size: 0.9em;">
+                {{ form.password2.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <p style="color: var(--muted);">
+            Already have an account? 
+            <a href="{% url 'admin:login' %}" style="color: var(--accent2);">Login here</a>
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Why Join?</h3>
+    <ul style="color: var(--muted);">
+        <li>✅ Earn free $DBC tokens by completing simple tasks</li>
+        <li>✅ Get bonus tokens for inviting friends</li>
+        <li>✅ Be among the first DonkeyBlast community members</li>
+        <li>✅ Early access to token presale</li>
+    </ul>
+</div>
+{% endblock %}

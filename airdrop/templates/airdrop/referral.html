@@ -1,0 +1,63 @@
+{% extends 'airdrop/base.html' %}
+
+{% block title %}Referral Program - DonkeyBlast Airdrop{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🎯 Referral Program</h2>
+    <p style="color: var(--muted);">Invite friends and earn 25 $DBC for each referral!</p>
+    
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+        <div style="flex: 1; min-width: 200px;">
+            <h3>Your Referrals</h3>
+            <div style="font-size: 2em; color: var(--accent2);">{{ referral_count }}</div>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+            <h3>Earned from Referrals</h3>
+            <div style="font-size: 2em; color: var(--accent2);">{{ referral_count }} × 25 = {{ referral_count|add:"0"|multiply:25 }} $DBC</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Your Referral Link</h3>
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <code style="color: var(--accent2); word-break: break-all;">{{ referral_link }}</code>
+    </div>
+    <button onclick="copyReferralLink()" class="btn">Copy Link</button>
+    
+    <script>
+    function copyReferralLink() {
+        navigator.clipboard.writeText("{{ referral_link }}");
+        alert('Referral link copied to clipboard!');
+    }
+    </script>
+</div>
+
+{% if referrals %}
+<div class="card">
+    <h3>Your Referred Friends</h3>
+    <div style="display: grid; gap: 10px;">
+        {% for referral in referrals %}
+        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 5px;">
+            <strong>{{ referral.user.username }}</strong>
+            <span style="color: var(--muted); float: right;">
+                Joined {{ referral.created_at|date:"M d, Y" }}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="card">
+    <h3>How it Works</h3>
+    <ol style="color: var(--muted); line-height: 1.6;">
+        <li>Share your referral link with friends</li>
+        <li>They sign up using your link</li>
+        <li>They complete at least one task</li>
+        <li>You automatically receive 25 $DBC for each friend</li>
+        <li>No limit on how many friends you can refer!</li>
+    </ol>
+</div>
+{% endblock %}
