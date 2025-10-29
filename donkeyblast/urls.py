@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.views.generic import RedirectView  # include رو اضافه کن
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/airdrop/')),
+    path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('airdrop/', include('airdrop.urls')),  # این خط رو اضافه کن
 ]
