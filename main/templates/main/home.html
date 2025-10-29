@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DonkeyBlast ($DBC) — Official</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg1: #06021a;
+      --bg2: #1b0b3a;
+      --accent: #7b5cff;
+      --accent2: #c08bff;
+      --glass: rgba(255,255,255,0.06);
+      --muted: #cfc7ff;
+      --card: rgba(255,255,255,0.04);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 15% 10%, rgba(123,92,255,0.14), transparent 8%),
+                  radial-gradient(800px 400px at 85% 90%, rgba(192,139,255,0.08), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color: white;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+    }
+
+    /* header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:72px; display:flex; align-items:center; justify-content:space-between;
+      padding:12px 28px; z-index:60;
+      background: linear-gradient(180deg, rgba(10,8,28,0.6), rgba(10,8,28,0.25));
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+    }
+    .logo {display:flex; gap:12px; align-items:center; font-weight:700; color:var(--accent)}
+    .logo .sym {font-size:26px}
+    nav a{color:var(--muted); text-decoration:none; margin:0 12px; font-weight:600}
+    nav a:hover{color:var(--accent2); transform:translateY(-2px)}
+
+    /* hero */
+    .hero{
+      min-height:100vh;
+      padding-top:96px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-inner{
+      width:95%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:center;
+    }
+
+    /* left column */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    h1{font-size:2.2rem; color:var(--accent); margin:0 0 8px}
+    .subtitle{color:#dcd7ff; margin-bottom:18px; font-weight:600}
+    .muted{color:#bfb7ff; font-size:0.95rem}
+
+    /* token info section */
+    .token-info{
+      margin-top:18px;
+      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+      background:var(--card); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.03)
+    }
+    .token-unit{
+      min-width:84px; text-align:center; padding:8px 10px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+      box-shadow: inset 0 -6px 14px rgba(0,0,0,0.15);
+    }
+    .token-value{font-size:1.6rem; font-weight:800; color:var(--accent2)}
+    .token-label{font-size:0.85rem; color:#cfc7ff; margin-top:6px}
+
+    .cta-row{margin-top:18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .btn{
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      color:white; padding:12px 18px; border-radius:12px; border:none; cursor:pointer; font-weight:700;
+      box-shadow: 0 8px 30px rgba(123,92,255,0.15);
+    }
+    .btn-outline{background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted)}
+
+    .note{margin-top:12px; color:#ddd; font-size:0.9rem}
+
+    /* right column - donkey banner */
+    .donkey-banner{
+      border-radius:var(--radius);
+      overflow:hidden;
+      position:relative;
+      height:420px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .donkey-banner img{width:100%; height:100%; object-fit:cover; display:block; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));}
+    .donkey-glow{
+      position:absolute; inset:auto 24px 24px auto; padding:8px 12px; border-radius:12px; font-weight:700; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(0,0,0,0.15));
+      backdrop-filter: blur(4px);
+      color:var(--muted);
+    }
+
+    /* sections */
+    section{padding:72px 20px}
+    .container{max-width:1100px; margin:0 auto}
+
+    /* tokenomics */
+    .tokenomics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .tokenomics-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .tokenomics-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .tokenomics-item:last-child {
+      border-bottom: none;
+    }
+    .tokenomics-label {
+      color: #dcd7ff;
+    }
+    .tokenomics-value {
+      color: var(--accent2);
+      font-weight: 700;
+    }
+
+    /* roadmap */
+    .roadmap {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border-radius:18px;
+      padding:36px;
+      border:1px solid rgba(255,255,255,0.03)
+    }
+    .road-title{font-size:1.8rem; color:var(--accent); margin-bottom:14px}
+    
+    /* New vertical roadmap layout */
+    .steps-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    
+    .step-vertical {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .step-vertical:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    .step-num-vertical {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(180deg,var(--accent),var(--accent2));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    
+    .step-body-vertical h4 {
+      margin: 0 0 10px;
+      color: var(--accent2);
+      font-size: 1.4rem;
+    }
+    
+    .step-body-vertical p {
+      margin: 0;
+      color: #dcd7ff;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* about */
+    .about-card{background:var(--glass); border-radius:16px; padding:24px; border:1px solid rgba(255,255,255,0.03)}
+    .about-card h3{color:var(--accent); margin-top:0}
+    .about-card p{color:#dcd7ff; line-height:1.7}
+
+    /* presale info */
+    .presale-card {
+      background: linear-gradient(135deg, rgba(123,92,255,0.1), rgba(192,139,255,0.05));
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(123,92,255,0.2);
+      margin-top: 20px;
+    }
+    .presale-highlight {
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* airdrop section */
+    .airdrop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .airdrop-phase {
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.03);
+      text-align: center;
+    }
+    .airdrop-phase h4 {
+      color: var(--accent2);
+      margin: 0 0 8px;
+    }
+    .airdrop-amount {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* socials */
+    .socials{display:flex; gap:12px; align-items:center; justify-content:center; margin-top:18px}
+    .socials a{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; text-decoration:none; color:white; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03)}
+    .socials i{color:var(--accent2)}
+
+    footer{padding:28px; text-align:center; color:#aaa; font-size:0.9rem; margin-top:18px}
+
+    /* responsive */
+    @media (max-width:960px){
+      .hero-inner{grid-template-columns: 1fr}
+      .donkey-banner{height:320px}
+      header{padding:10px 14px}
+      .step-vertical {
+        flex-direction: column;
+        text-align: center;
+      }
+      .step-num-vertical {
+        align-self: center;
+      }
+    }
+    @media (max-width:520px){
+      nav a{display:none}
+      .token-unit{min-width:66px}
+      .step-vertical{flex-direction:column; gap:10px}
+      .socials {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><span class="sym">🐴</span> DonkeyBlast <small style="color:#d8cfff; margin-left:8px; font-weight:600">$DBC</small></div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#about">About</a>
+      <a href="#socials">Socials</a>
+      <!-- لینک ایردراپ اضافه شد -->
+      <a href="/airdrop/" style="color: var(--accent2);">🎁 Airdrop</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-inner container">
+        <!-- left -->
+        <div class="card">
+          <h1>DonkeyBlast — The funniest meme token</h1>
+          <div class="subtitle">Blasting off soon on <strong>pomp.fun</strong> — community, rewards & fun</div>
+          <div class="muted">DonkeyBlastCoin (DBC) merges entertainment with real token mechanics. Complete tasks, earn pending rewards, and receive $DBC automatically after the official token launch.</div>
+
+          <!-- Token info -->
+          <div class="token-info" aria-live="polite" style="margin-top:18px">
+            <div class="token-unit"><div class="token-value">$DBC</div><div class="token-label">Ticker</div></div>
+            <div class="token-unit"><div class="token-value">10B</div><div class="token-label">Supply</div></div>
+            <div class="token-unit"><div class="token-value">SOL</div><div class="token-label">Chain</div></div>
+            <div class="token-unit"><div class="token-value">9</div><div class="token-label">Decimals</div></div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn" href="https://t.me/DonkeyBlastCoin" target="_blank" rel="noopener">Join Telegram</a>
+            <a class="btn btn-outline" href="https://x.com/donkeyblastcoin?s=11" target="_blank" rel="noopener">Follow on X</a>
+            <!-- دکمه ایردراپ اضافه شد -->
+            <a class="btn btn-outline" href="/airdrop/">🎁 Join Airdrop</a>
+          </div>
+
+          <div class="note">Note: All task rewards are stored as <strong>pending</strong> in our secure database. Payouts are executed in $DBC automatically after official token mint on Solana.</div>
+        </div>
+
+        <!-- right -->
+        <div class="donkey-banner">
+          <!-- use your uploaded photo file name here -->
+          <img src="photo_2025-10-15_23-30-25.jpg" alt="DonkeyBlast banner image">
+          <div class="donkey-glow">$DBC • Launching soon on pomp.fun</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <section id="tokenomics">
+      <div class="container">
+        <div class="card">
+          <h2 style="color:var(--accent); margin-top:0">Tokenomics</h2>
+          <div class="muted" style="margin-bottom:20px">Total Supply: 10,000,000,000 DBC (Fixed - No additional minting)</div>
+          
+          <div class="tokenomics-grid">
+            <div class="tokenomics-card">
+              <h3 style="color:var(--accent2); margin-top:0">Distribution</h3>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Public Presale</span>
+                <span class="tokenomics-value">65% (6.5B DBC)</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Liquidity Pool</span>
+                <span class="tokenomics-value">15% (1.5B DBC)</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Team & Development</span>
+                <span class="tokenomics-value">5% (500M DBC)</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Marketing & Partnerships</span>
+                <span class="tokenomics-value">10% (1B DBC)</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Airdrop</span>
+                <span class="tokenomics-value">5% (500M DBC)</span>
+              </div>
+            </div>
+            
+            <div class="tokenomics-card">
+              <h3 style="color:var(--accent2); margin-top:0">Presale Details</h3>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Type</span>
+                <span class="tokenomics-value">Fixed Rate</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Exchange Rate</span>
+                <span class="tokenomics-value">1 SOL = 1,000,000 DBC</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Price per DBC</span>
+                <span class="tokenomics-value">~$0.0002</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Min Purchase</span>
+                <span class="tokenomics-value">0.2 SOL</span>
+              </div>
+              <div class="tokenomics-item">
+                <span class="tokenomics-label">Max Purchase</span>
+                <span class="tokenomics-value">20 SOL</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="presale-card">
+            <h3 style="color:var(--accent2); margin-top:0">Presale Fund Allocation</h3>
+            <div class="tokenomics-item">
+              <span class="tokenomics-label">Development & Infrastructure</span>
+              <span class="tokenomics-value">30%</span>
+            </div>
+            <div class="tokenomics-item">
+              <span class="tokenomics-label">Marketing & Promotion</span>
+              <span class="tokenomics-value">25%</span>
+            </div>
+            <div class="tokenomics-item">
+              <span class="tokenomics-label">Operational Costs</span>
+              <span class="tokenomics-value">20%</span>
+            </div>
+            <div class="tokenomics-item">
+              <span class="tokenomics-label">Liquidity Pool</span>
+              <span class="tokenomics-value">15%</span>
+            </div>
+            <div class="tokenomics-item">
+              <span class="tokenomics-label">Reserve</span>
+              <span class="tokenomics-value">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AIRDROP -->
+    <section id="airdrop" style="background: rgba(0,0,0,0.1);">
+      <div class="container">
+        <div class="card">
+          <h2 style="color:var(--accent); margin-top:0">Airdrop Program</h2>
+          <div class="muted" style="margin-bottom:20px">Total Airdrop: 500,000,000 DBC (5% of total supply)</div>
+          
+          <div class="airdrop-grid">
+            <div class="airdrop-phase">
+              <h4>Phase 1</h4>
+              <div class="airdrop-amount">125M DBC</div>
+              <p>Early promotional supporters</p>
+            </div>
+            <div class="airdrop-phase">
+              <h4>Phase 2</h4>
+              <div class="airdrop-amount">125M DBC</div>
+              <p>Presale participants</p>
+            </div>
+            <div class="airdrop-phase">
+              <h4>Phase 3</h4>
+              <div class="airdrop-amount">125M DBC</div>
+              <p>Referral & marketing contributors</p>
+            </div>
+            <div class="airdrop-phase">
+              <h4>Phase 4</h4>
+              <div class="airdrop-amount">125M DBC</div>
+              <p>Long-term holders & community</p>
+            </div>
+          </div>
+          
+          <div style="margin-top:20px; text-align:center;">
+            <!-- لینک ایردراپ اصلاح شد -->
+            <a class="btn" href="/airdrop/">Join Airdrop</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" style="padding-top:40px">
+      <div class="container">
+        <div class="roadmap card">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px">
+            <div class="road-title">DonkeyBlast Official Roadmap</div>
+            <div style="color:#d0c2ff; font-weight:700">Updated • Q4 2025 → 2027+</div>
+          </div>
+
+          <!-- New vertical roadmap layout -->
+          <div class="steps-vertical">
+            <div class="step-vertical">
+              <div class="step-num-vertical">1</div>
+              <div class="step-body-vertical">
+                <h4>Phase 1 — Foundation & Token Launch (Q4 2025)</h4>
+                <p>Token creation on Solana (10,000,000,000 DBC), website & socials, Phase 1 airdrop, whitepaper release, smart contract creation and verification.</p>
+              </div>
+            </div>
+
+            <div class="step-vertical">
+              <div class="step-num-vertical">2</div>
+              <div class="step-body-vertical">
+                <h4>Phase 2 — Community & Presale (Q1 2026)</h4>
+                <p>Presale launch, multi-phase airdrops, influencer partnerships, expand Telegram/X/Reddit/YouTube, listing on Solana-based analytics platforms.</p>
+              </div>
+            </div>
+
+            <div class="step-vertical">
+              <div class="step-num-vertical">3</div>
+              <div class="step-body-vertical">
+                <h4>Phase 3 — Liquidity & Listings (Q2 2026)</h4>
+                <p>Liquidity pools on Raydium, public trading, staking programs, CMC/CG submissions, expansion of international marketing campaigns.</p>
+              </div>
+            </div>
+
+            <div class="step-vertical">
+              <div class="step-num-vertical">4</div>
+              <div class="step-body-vertical">
+                <h4>Phase 4 — Ecosystem (Q3-Q4 2026)</h4>
+                <p>Games & NFTs, DonkeyBlast Wallet, DAO governance, reward system for active community, partnerships with Web3 and GameFi projects.</p>
+              </div>
+            </div>
+
+            <div class="step-vertical">
+              <div class="step-num-vertical">5</div>
+              <div class="step-body-vertical">
+                <h4>Phase 5 — Global Expansion (2027+)</h4>
+                <p>Top-tier CEX listings, regional expansion (Turkey, MENA, Asia), brand collaborations, establishing long-term sustainability plan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px; color:#d8cffc; font-size:0.95rem">
+            Quick one-line: Phase 1—Launch & list; Phase 2—Community & presale; Phase 3—Liquidity & trade; Phase 4—Ecosystem & utility; Phase 5—Global scaling.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="about-card">
+          <h3>About DonkeyBlastCoin (DBC)</h3>
+
+          <p>
+            DonkeyBlastCoin (DBC) is an innovative blockchain project built to create a dynamic and engaging ecosystem in the world of Web3 and digital entertainment.
+            Our mission is to merge cutting-edge blockchain technology with creativity, delivering a unique and valuable experience for both users and investors.
+          </p>
+
+          <p>
+            At DonkeyBlastCoin, we are driven by transparency, security, and innovation. Our team consists of experienced professionals in blockchain development, technology, and marketing, all working together with passion and vision to build a sustainable and forward-looking crypto community.
+          </p>
+
+          <p>
+            We believe in bridging the gap between technology and people. Through continuous improvement, strategic development, and community-driven growth, DonkeyBlastCoin aims to become a trusted name in the decentralized digital economy.
+            Join us as we build the future — one block at a time.
+          </p>
+
+          <div style="margin-top:20px; padding:16px; background:rgba(123,92,255,0.1); border-radius:12px;">
+            <h4 style="color:var(--accent2); margin-top:0">Our Vision</h4>
+            <p style="margin:0; color:#dcd7ff">
+              To build a transparent, entertaining, and innovative ecosystem within the Web3 space, where both users and investors can participate with full trust and engagement.
+            </p>
+          </div>
+
+          <div style="margin-top:14px; font-size:0.95rem; color:#d0c2ff; font-weight:700">
+            Token details: Solana | SPL | Total supply: 10,000,000,000 DBC | Decimals: 9
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAO & SECURITY -->
+    <section id="dao" style="background: rgba(0,0,0,0.1);">
+      <div class="container">
+        <div class="card">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <div>
+              <h3 style="color:var(--accent); margin-top:0">DAO Governance</h3>
+              <p style="color:#dcd7ff">
+                DonkeyBlastCoin will evolve into a DAO-governed ecosystem. DBC holders will have voting power to influence:
+              </p>
+              <ul style="color:#dcd7ff; line-height:1.7">
+                <li>Development and product upgrades</li>
+                <li>Marketing and collaboration decisions</li>
+                <li>Fund allocation and liquidity management</li>
+                <li>Future project expansions</li>
+              </ul>
+            </div>
+            <div>
+              <h3 style="color:var(--accent); margin-top:0">Security & Transparency</h3>
+              <p style="color:#dcd7ff">
+                DBC smart contracts are built using a security-first approach and fully verified on Solana. All presales, transactions, and airdrop distributions are traceable via Solscan for full transparency.
+              </p>
+              <div style="margin-top:16px; padding:12px; background:rgba(0,0,0,0.2); border-radius:8px;">
+                <p style="margin:0; color:#bfb7ff; font-size:0.9rem;">
+                  <strong>Smart Contract:</strong> Verified on Solana<br>
+                  <strong>Transactions:</strong> Fully transparent on Solscan<br>
+                  <strong>Team:</strong> Doxxed and experienced
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIALS & CONTACT -->
+    <section id="socials">
+      <div class="container">
+        <div style="text-align:center">
+          <div style="font-size:1.6rem; color:var(--accent); font-weight:800">Official Links</div>
+
+          <div class="socials" style="margin-top:14px">
+            <a href="https://t.me/DonkeyBlastCoin" target="_blank" rel="noopener">
+              <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://x.com/donkeyblastcoin?s=11" target="_blank" rel="noopener">
+              <i class="fab fa-x-twitter"></i> X (Twitter)
+            </a>
+            <a href="#" title="Reddit coming soon">
+              <i class="fab fa-reddit"></i> Reddit (soon)
+            </a>
+            <a href="#" title="YouTube coming soon">
+              <i class="fab fa-youtube"></i> YouTube (soon)
+            </a>
+            <a href="#" title="Solscan will be added after launch">
+              <i class="fas fa-search"></i> Solscan (soon)
+            </a>
+          </div>
+
+          <div style="margin-top:18px; color:#cfc7ff">Email: <strong>donkeyblastcoin@gmail.com</strong> (recommended)</div>
+          
+          <div style="margin-top:24px; padding:16px; background:rgba(255,255,255,0.03); border-radius:12px; display:inline-block;">
+            <p style="margin:0; color:#d0c2ff; font-style:italic;">
+              "DonkeyBlastCoin is more than a token — it's a movement combining fun, innovation, and community spirit."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 DonkeyBlast • $DBC — Launching on pomp.fun • Built with ❤️
+    </footer>
+  </main>
+
+  <!-- JS: helpers -->
+  <script>
+    // smooth scroll helper
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // small accessibility: keyboard focus outline for anchors
+    document.querySelectorAll('a, button').forEach(i=>{
+      i.addEventListener('keydown', e=>{
+        if(e.key === 'Enter') i.click();
+      });
+    });
+    
+    // Add active class to navigation links when scrolling
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav a');
+      
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 100)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').substring(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

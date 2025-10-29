@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{% block title %}DonkeyBlast ($DBC){% endblock %}</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* استایل‌های ساده برای تست */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #06021a;
+            color: white;
+        }
+        header {
+            background: rgba(10,8,28,0.9);
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-weight: bold;
+            color: #7b5cff;
+        }
+        nav a {
+            color: #cfc7ff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        main {
+            padding-top: 80px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo">🐴 DonkeyBlast $DBC</div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/airdrop/">Airdrop</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- محتوای صفحات اینجا میاد -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        © 2025 DonkeyBlast • Built with ❤️
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

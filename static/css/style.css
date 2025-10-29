@@ -1,0 +1,155 @@
+/* Variables */
+/* فقط استایل‌های ضروری برای تست */
+:root{
+    --bg1: #06021a;
+    --bg2: #1b0b3a;
+    --accent: #7b5cff;
+    --accent2: #c08bff;
+    --muted: #cfc7ff;
+    --radius: 18px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%; margin:0; padding:0;}
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg,var(--bg1),var(--bg2));
+    color: white;
+}
+
+/* Header */
+header{
+    position:fixed; top:0; left:0; right:0; height:72px; 
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 28px; z-index:60;
+    background: rgba(10,8,28,0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo {display:flex; gap:12px; align-items:center; font-weight:700; color:var(--accent)}
+nav a{color:var(--muted); text-decoration:none; margin:0 12px; font-weight:600}
+
+/* Main Content */
+main { padding-top: 72px; }
+
+/* Sections */
+section{padding:72px 20px}
+.container{max-width:1100px; margin:0 auto}
+
+/* Cards */
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius);
+    padding:28px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Buttons */
+.btn{
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    color:white; padding:12px 18px; border-radius:12px; 
+    border:none; cursor:pointer; font-weight:700;
+    text-decoration: none; display: inline-block;
+}
+
+/* Typography */
+h1{font-size:2.2rem; color:var(--accent); margin:0 0 8px}
+h2{font-size:1.8rem; color:var(--accent); margin:0 0 16px}
+.subtitle{color:#dcd7ff; margin-bottom:18px; font-weight:600}
+.muted{color:#bfb7ff; font-size:0.95rem}
+
+/* Hero Section */
+.hero{ min-height: 100vh; display: flex; align-items: center; }
+.hero-inner{
+    width:95%; max-width:1100px; margin: 0 auto;
+    display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:center;
+}
+
+/* بقیه استایل‌ها رو میتونی تدریجاً اضافه کنی */
+:root{
+    --bg1: #06021a;
+    --bg2: #1b0b3a;
+    --accent: #7b5cff;
+    --accent2: #c08bff;
+    --glass: rgba(255,255,255,0.06);
+    --muted: #cfc7ff;
+    --card: rgba(255,255,255,0.04);
+    --radius: 18px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0;
+    font-family: Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(1200px 600px at 15% 10%, rgba(123,92,255,0.14), transparent 8%),
+                radial-gradient(800px 400px at 85% 90%, rgba(192,139,255,0.08), transparent 8%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color: white;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    scroll-behavior:smooth;
+}
+
+/* Header */
+header{
+    position:fixed; inset:0 0 auto 0; height:72px; display:flex; align-items:center; justify-content:space-between;
+    padding:12px 28px; z-index:60;
+    background: linear-gradient(180deg, rgba(10,8,28,0.6), rgba(10,8,28,0.25));
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+}
+.logo {display:flex; gap:12px; align-items:center; font-weight:700; color:var(--accent)}
+.logo .sym {font-size:26px}
+nav a{color:var(--muted); text-decoration:none; margin:0 12px; font-weight:600}
+nav a:hover{color:var(--accent2); transform:translateY(-2px)}
+
+/* Main Content */
+main {
+    padding-top: 72px; /* برای هدر فیکس شده */
+}
+
+/* Sections */
+section{padding:72px 20px}
+.container{max-width:1100px; margin:0 auto}
+
+/* Cards */
+.card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: var(--radius);
+    padding:28px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Buttons */
+.btn{
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    color:white; padding:12px 18px; border-radius:12px; border:none; cursor:pointer; font-weight:700;
+    box-shadow: 0 8px 30px rgba(123,92,255,0.15);
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-outline{background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted)}
+
+/* Typography */
+h1{font-size:2.2rem; color:var(--accent); margin:0 0 8px}
+h2{font-size:1.8rem; color:var(--accent); margin:0 0 16px}
+.subtitle{color:#dcd7ff; margin-bottom:18px; font-weight:600}
+.muted{color:#bfb7ff; font-size:0.95rem}
+
+/* بقیه استایل‌ها از فایل اصلی رو اینجا کپی کن */
+/* token-info, tokenomics-grid, roadmap, socials, etc. */
+
+/* Responsive */
+@media (max-width:960px){
+    .hero-inner{grid-template-columns: 1fr}
+    .donkey-banner{height:320px}
+    header{padding:10px 14px}
+}
+
+@media (max-width:520px){
+    nav a{display:none}
+    .socials {flex-direction: column;}
+}
